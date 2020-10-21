@@ -39,8 +39,13 @@ class Server(BaseHTTPRequestHandler):
             self.send_response(200)
             self.send_header("Content-type", "application/json")
             self.end_headers()
-            json_str = json.dumps("{'test':'ok'}")
-            self.wfile.write(bytes(json_str, 'utf-8'))
+            groups = open("fixtures/groups.json").read()
+            groups_dict = json.loads(groups)
+            groups_str = json.dumps(groups_dict)
+            self.wfile.write(bytes(groups_str, 'utf-8'))
+        else:
+            self.send_response(404)
+            self.end_headers()
 
 
 server = HTTPServer((HOST, PORT), Server)

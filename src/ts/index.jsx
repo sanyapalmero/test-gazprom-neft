@@ -20,14 +20,27 @@ class Groups extends Component{
         });
 
         let resp_json = await response.json();
-        console.log(resp_json);
+        this.setState({groups: resp_json});
     }
 
     render() {
+        let groups = [];
+        this.state.groups.forEach(group => {
+            groups.push(
+                <a
+                    className="SidebarMenu-Item SidebarMenu-Item__link"
+                    href="#"
+                    id={group.id}
+                    key={group.id}
+                >
+                    {group.name}
+                </a>
+            )
+        });
+
         return (
             <div>
-                <a className="SidebarMenu-Item SidebarMenu-Item__link" href="#">Таблица 3</a>
-                <a className="SidebarMenu-Item SidebarMenu-Item__link" href="#">Таблица 4</a>
+                {groups}
             </div>
         )
     }
