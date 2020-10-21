@@ -1,12 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Тестовое задание</title>
+    <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-    <div id="root"></div>
+    <div class="ContentWithSidebar">
+        <div class="ContentWithSidebar-Sidebar">
+            <div class="SidebarMenu">
+                <div class="SidebarMenu-Item SidebarMenu-Item__header">Меню</div>
+                <a class="SidebarMenu-Item SidebarMenu-Item__link" href="#">Таблица 1</a>
+                <a class="SidebarMenu-Item SidebarMenu-Item__link" href="#">Таблица 2</a>
+            </div>
+        </div>
+        <div class="ContentWithSidebar-Content">
+            <div class="ContentWithSidebar-Content__header">Таблица</div>
+            <div class="ContentWithSidebar-Content__table" id="table"></div>
+        </div>
+    </div>
     <script src="./bundle.js"></script>
 </body>
 </html>

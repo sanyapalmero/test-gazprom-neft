@@ -2,11 +2,7 @@ const path = require("path");
 
 module.exports = {
     mode: "development",
-    entry: "./src/index.jsx",
-    output: {
-        path: path.join(__dirname, 'public'),
-        filename: "bundle.js",
-    },
+    entry: "./src/ts/index.jsx",
     module: {
         rules: [
           {
@@ -17,16 +13,23 @@ module.exports = {
             }
           },
           {
-            test: /\.s(a|c)ss$/,
+            test: /\.scss$|\.css$/,
             use: [
-              'style-loader',
-              {
-                loader: 'css-loader',
-                options: { modules: true }
-              },
-              'sass-loader'
+                {
+                    loader: 'file-loader',
+                    options: {
+                        name: "style.css"
+                    }
+                },
+                'extract-loader',
+                "css-loader",
+                "sass-loader",
             ]
-          }
+        },
         ]
-    }
+    },
+    output: {
+      path: path.join(__dirname, 'public'),
+      filename: "bundle.js",
+    },
 }

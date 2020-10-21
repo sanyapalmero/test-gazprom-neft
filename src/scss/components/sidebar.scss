@@ -1,0 +1,51 @@
+.ContentWithSidebar {
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.ContentWithSidebar-Sidebar {
+    width: 262px;
+    height: 100%;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+    position: fixed;
+    border-right: 10px solid #D1E1F0;
+}
+
+.ContentWithSidebar-Content {
+    width: 100%;
+    margin-left: 272px;
+}
+
+.ContentWithSidebar-Content__header {
+    font-size: 16px;
+    font-weight: 600;
+    padding: 19px 30px;
+    color: white;
+    background-color: $primary-color;
+}
+
+.SidebarMenu-Item {
+    display: block;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 19px 30px;
+}
+
+.SidebarMenu-Item__header {
+    color: white;
+    background-color: $primary-color;
+}
+
+.SidebarMenu-Item__link {
+    margin-top: 5px;
+    color: $text-color;
+    background-color: $secondary-color;
+
+    &:hover{
+        background-color: $secondary-color-hover;
+    }
+}
