@@ -18,6 +18,13 @@ export default class Groups extends Component{
         });
 
         let resp_json = await response.json();
+        for (let group of resp_json) {
+            Object.defineProperty(group, 'is_tables_visible', {
+                value: false,
+                writable: true
+            });
+        }
+
         this.setState({groups: resp_json});
     }
 
@@ -31,6 +38,20 @@ export default class Groups extends Component{
         this.setState({tables: resp_json});
     }
 
+    toggleGroupTables(group_id) {
+        let groups = [...this.state.groups];
+        for (let group of groups) {
+            if (group.id == group_id) {
+                if (!group.is_tables_visible) {
+                    group.is_tables_visible = true;
+                } else {
+                    group.is_tables_visible = false;
+                }
+            }
+        }
+        this.setState({groups: groups});
+    }
+
     render() {
         return (
             <div>
@@ -40,12 +61,20 @@ export default class Groups extends Component{
                             className="SidebarMenu-Item SidebarMenu-Item__group"
                             id={group.id}
                             key={group.id}
+                            onClick={() => this.toggleGroupTables(group.id)}
                         >
                             {group.name}
                         </div>
-                        {this.state.tables.filter(table => table.group_id == group.id).map((table, index) => (
-                            <div key={index}>{table.name}</div>
-                        ))}
+                        <div className={group.is_tables_visible ? "SidebarMenu-Tables" : "SidebarMenu-Tables SidebarMenu-Tables__hidden"}>
+                            {this.state.tables.filter(table => table.group_id == group.id).map((table, index) => (
+                                <div
+                                    className="SidebarMenu-Item SidebarMenu-Item__table"
+                                    key={index}
+                                >
+                                    {table.name}
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 ))}
             </div>

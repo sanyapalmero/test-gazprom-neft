@@ -49,3 +49,16 @@
         background-color: $secondary-color-hover;
     }
 }
+
+.SidebarMenu-Item__table {
+    color: $text-color;
+    padding: 5px 30px;
+
+    &:hover{
+        background-color: $info-color;
+    }
+}
+
+.SidebarMenu-Tables__hidden {
+    display: none;
+}

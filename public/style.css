@@ -345,3 +345,12 @@ template {
   background-color: #ECECEC; }
   .SidebarMenu-Item__group:hover {
     background-color: #cccccc; }
+
+.SidebarMenu-Item__table {
+  color: #474747;
+  padding: 5px 30px; }
+  .SidebarMenu-Item__table:hover {
+    background-color: #FFEEBF; }
+
+.SidebarMenu-Tables__hidden {
+  display: none; }
