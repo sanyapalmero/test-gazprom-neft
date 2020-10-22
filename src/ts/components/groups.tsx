@@ -74,14 +74,14 @@ class Groups extends Component<{}, GroupsState>{
         this.setState({groups: groups});
     }
 
-    async getTableDataById(table_id: number) {
+    async getTableDataById(table_id: number, table_name: string) {
         let response = await fetch("/tables/" + table_id, {
             method: 'POST',
             credentials: 'same-origin'
         });
 
         let data = await response.json();
-        renderTable(data);
+        renderTable(data, table_name);
         this.setState({selectedTable: table_id});
     }
 
@@ -107,7 +107,7 @@ class Groups extends Component<{}, GroupsState>{
                                         "SidebarMenu-GroupsItem SidebarMenu-GroupsItem__table"
                                     }
                                     key={index}
-                                    onClick={() => this.getTableDataById(table.table_id)}
+                                    onClick={() => this.getTableDataById(table.table_id, table.name)}
                                 >
                                     <div className="SidebarMenu-FileIcon"></div>
                                     <div className="SidebarMenu-GroupsItem__name">{table.name}</div>

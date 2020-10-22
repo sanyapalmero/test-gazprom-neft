@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {render} from 'react-dom';
 
 interface TableProps {
+    table_name: string,
     table_rows: [Object]
 }
 
@@ -32,21 +33,26 @@ class Table extends Component<TableProps, {}> {
         });
 
         return (
-            <table className="Table">
-                <thead>
-                    <tr>
-                        {headersTdList}
-                    </tr>
-                </thead>
-                <tbody>
-                    {values}
-                </tbody>
-            </table>
+            <div>
+                <div className="ContentWithSidebar-Content__header">{this.props.table_name}</div>
+                <div className="ContentWithSidebar-Content__table">
+                    <table className="Table">
+                        <thead>
+                            <tr>
+                                {headersTdList}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {values}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         )
     }
 }
 
-export function renderTable(data: [Object]) {
+export function renderTable(data: [Object], table_name: string) {
     let htmlElement = document.getElementById('table') as HTMLElement;
-    render(<Table table_rows={data}/>, htmlElement);
+    render(<Table table_rows={data} table_name={table_name}/>, htmlElement);
 }
