@@ -40,9 +40,23 @@ class Server(BaseHTTPRequestHandler):
             self.send_header("Content-type", "application/json")
             self.end_headers()
             groups = open("fixtures/groups.json").read()
-            groups_dict = json.loads(groups)
-            groups_str = json.dumps(groups_dict)
+            groups_list = json.loads(groups)
+            groups_str = json.dumps(groups_list)
             self.wfile.write(bytes(groups_str, 'utf-8'))
+        elif self.path == '/tables':
+            self.send_response(200)
+            self.send_header("Content-type", "application/json")
+            self.end_headers()
+            tables = open("fixtures/tables.json").read()
+            tables_list = json.loads(tables)
+            table_names = []
+            for table in tables_list:
+                table_names.append({
+                    "name": table["name"],
+                    "group_id": table["group_id"]
+                })
+            tables_str = json.dumps(table_names)
+            self.wfile.write(bytes(tables_str, 'utf-8'))
         else:
             self.send_response(404)
             self.end_headers()

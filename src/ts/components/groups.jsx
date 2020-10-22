@@ -5,8 +5,10 @@ export default class Groups extends Component{
         super(props);
         this.state = {
             groups: [],
+            tables: [],
         }
         this.getGroupsFromJsonFile();
+        this.getTableNamesFromJsonFile();
     }
 
     async getGroupsFromJsonFile() {
@@ -19,24 +21,33 @@ export default class Groups extends Component{
         this.setState({groups: resp_json});
     }
 
-    render() {
-        let groups = [];
-        this.state.groups.forEach(group => {
-            groups.push(
-                <a
-                    className="SidebarMenu-Item SidebarMenu-Item__link"
-                    href="#"
-                    id={group.id}
-                    key={group.id}
-                >
-                    {group.name}
-                </a>
-            )
+    async getTableNamesFromJsonFile() {
+        let response = await fetch("/tables", {
+            method: 'POST',
+            credentials: 'same-origin'
         });
 
+        let resp_json = await response.json();
+        this.setState({tables: resp_json});
+    }
+
+    render() {
         return (
             <div>
-                {groups}
+                {this.state.groups.map(group => (
+                    <div key={group.id}>
+                        <div
+                            className="SidebarMenu-Item SidebarMenu-Item__group"
+                            id={group.id}
+                            key={group.id}
+                        >
+                            {group.name}
+                        </div>
+                        {this.state.tables.filter(table => table.group_id == group.id).map((table, index) => (
+                            <div key={index}>{table.name}</div>
+                        ))}
+                    </div>
+                ))}
             </div>
         )
     }

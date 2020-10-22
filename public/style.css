@@ -339,9 +339,9 @@ template {
   color: white;
   background-color: #4DA4DA; }
 
-.SidebarMenu-Item__link {
+.SidebarMenu-Item__group {
   margin-top: 5px;
   color: #474747;
   background-color: #ECECEC; }
-  .SidebarMenu-Item__link:hover {
+  .SidebarMenu-Item__group:hover {
     background-color: #cccccc; }
