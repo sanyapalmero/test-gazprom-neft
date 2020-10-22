@@ -9,27 +9,27 @@ class Table extends Component<TableProps, {}> {
     render() {
         let row = this.props.table_rows[0];
         let headers = Object.keys(row);
-        let thList = [];
+        let thList: JSX.Element[] = [];
 
-        for (let header of headers) {
+        headers.map((header, index) => {
             thList.push(
-                <th key={header}>{header}</th>
+                <th key={index}>{header}</th>
             )
-        }
+        });
 
-        let values = [];
-        for (let prop of this.props.table_rows) {
-            let tds = [];
-            let propValues = Object.values(prop);
-            for (let propValue of propValues) {
-                tds.push(
-                    <td key={propValue}>{propValue}</td>
+        let values: JSX.Element[] = [];
+        this.props.table_rows.map((row, index) => {
+            let tdList: JSX.Element[] = [];
+            let rowValues = Object.values(row);
+            rowValues.map((value, index) => {
+                tdList.push(
+                    <td key={index}>{value}</td>
                 )
-            }
+            });
             values.push(
-                <tr>{tds}</tr>
+                <tr key={index}>{tdList}</tr>
             )
-        }
+        });
 
         return (
             <table>
