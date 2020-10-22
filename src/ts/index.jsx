@@ -3,47 +3,16 @@ import '../scss/index.scss';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
+import Groups from './components/groups.jsx';
 
-class Groups extends Component{
-    constructor(props) {
-        super(props);
-        this.state = {
-            groups: [],
-        }
-        this.getGroupsFromJsonFile();
-    }
 
-    async getGroupsFromJsonFile() {
-        let response = await fetch("/groups", {
-            method: 'POST',
-            credentials: 'same-origin'
-        });
-
-        let resp_json = await response.json();
-        this.setState({groups: resp_json});
-    }
-
+class Index extends Component {
     render() {
-        let groups = [];
-        this.state.groups.forEach(group => {
-            groups.push(
-                <a
-                    className="SidebarMenu-Item SidebarMenu-Item__link"
-                    href="#"
-                    id={group.id}
-                    key={group.id}
-                >
-                    {group.name}
-                </a>
-            )
-        });
-
         return (
-            <div>
-                {groups}
-            </div>
+            <Groups/>
         )
     }
 }
 
-ReactDOM.render(<Groups/>, document.getElementById('groups'));
+
+ReactDOM.render(<Index/>, document.getElementById('groups'));
