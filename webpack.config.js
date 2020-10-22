@@ -2,14 +2,14 @@ const path = require("path");
 
 module.exports = {
     mode: "development",
-    entry: "./src/ts/index.jsx",
+    entry: "./src/ts/index.tsx",
     module: {
         rules: [
           {
-            test: /\.(js|jsx)$/,
+            test: /\.tsx?$/,
             exclude: /node_modules/,
             use: {
-              loader: "babel-loader"
+              loader: "ts-loader"
             }
           },
           {
@@ -27,6 +27,9 @@ module.exports = {
             ]
         },
         ]
+    },
+    resolve: {
+      extensions: ['.ts', '.tsx', '.js', '.scss', '.css']
     },
     output: {
       path: path.join(__dirname, 'public'),

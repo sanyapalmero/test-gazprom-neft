@@ -1,12 +1,32 @@
 import React, { Component } from 'react';
+import {render} from 'react-dom';
 
-export default class Groups extends Component{
-    constructor(props) {
+interface Group {
+    id: number,
+    name: string,
+    is_tables_visible: boolean,
+}
+
+interface Table {
+    group_id: number,
+    name: string
+}
+
+interface GroupsState {
+    groups: Group[],
+    tables: Table[],
+}
+
+class Groups extends Component<{}, GroupsState>{
+    constructor(props = {}) {
         super(props);
         this.state = {
             groups: [],
             tables: [],
         }
+    }
+
+    componentDidMount() {
         this.getGroupsFromJsonFile();
         this.getTableNamesFromJsonFile();
     }
@@ -38,7 +58,7 @@ export default class Groups extends Component{
         this.setState({tables: resp_json});
     }
 
-    toggleGroupTables(group_id) {
+    toggleGroupTables(group_id: Number) {
         let groups = [...this.state.groups];
         for (let group of groups) {
             if (group.id == group_id) {
@@ -59,7 +79,6 @@ export default class Groups extends Component{
                     <div key={group.id}>
                         <div
                             className="SidebarMenu-Item SidebarMenu-Item__group"
-                            id={group.id}
                             key={group.id}
                             onClick={() => this.toggleGroupTables(group.id)}
                         >
@@ -80,4 +99,8 @@ export default class Groups extends Component{
             </div>
         )
     }
+}
+
+export function renderGroups(htmlElement: HTMLElement) {
+    render(<Groups/>, htmlElement)
 }
