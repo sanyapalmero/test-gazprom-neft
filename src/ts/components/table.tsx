@@ -9,11 +9,11 @@ class Table extends Component<TableProps, {}> {
     render() {
         let row = this.props.table_rows[0];
         let headers = Object.keys(row);
-        let thList: JSX.Element[] = [];
+        let headersTdList: JSX.Element[] = [];
 
         headers.map((header, index) => {
-            thList.push(
-                <th key={index}>{header}</th>
+            headersTdList.push(
+                <td key={index}>{header}</td>
             )
         });
 
@@ -32,10 +32,10 @@ class Table extends Component<TableProps, {}> {
         });
 
         return (
-            <table>
+            <table className="Table">
                 <thead>
                     <tr>
-                        {thList}
+                        {headersTdList}
                     </tr>
                 </thead>
                 <tbody>
