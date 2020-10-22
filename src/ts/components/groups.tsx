@@ -92,7 +92,8 @@ class Groups extends Component<{}, GroupsState>{
                             key={group.id}
                             onClick={() => this.toggleGroupTables(group.id)}
                         >
-                            {group.name}
+                            <div>{group.name}</div>
+                            <div className={group.is_tables_visible ? "SidebarMenu-MinusIcon" : "SidebarMenu-PlusIcon"}></div>
                         </div>
                         <div className={group.is_tables_visible ? "SidebarMenu-GroupsTables" : "SidebarMenu-GroupsTables SidebarMenu-GroupsTables__hidden"}>
                             {this.state.tables.filter(table => table.group_id == group.id).map((table, index) => (
@@ -101,7 +102,8 @@ class Groups extends Component<{}, GroupsState>{
                                     key={index}
                                     onClick={() => this.getTableDataById(table.table_id)}
                                 >
-                                    {table.name}
+                                    <div className="SidebarMenu-FileIcon"></div>
+                                    <div className="SidebarMenu-GroupsItem__name">{table.name}</div>
                                 </div>
                             ))}
                         </div>
