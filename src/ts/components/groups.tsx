@@ -18,6 +18,7 @@ interface Table {
 interface GroupsState {
     groups: Group[],
     tables: Table[],
+    selectedTable: number | null,
 }
 
 class Groups extends Component<{}, GroupsState>{
@@ -26,6 +27,7 @@ class Groups extends Component<{}, GroupsState>{
         this.state = {
             groups: [],
             tables: [],
+            selectedTable: null,
         }
     }
 
@@ -58,7 +60,7 @@ class Groups extends Component<{}, GroupsState>{
         this.setState({tables: tables});
     }
 
-    toggleGroupTables(group_id: Number) {
+    toggleGroupTables(group_id: number) {
         let groups = [...this.state.groups];
         for (let group of groups) {
             if (group.id == group_id) {
@@ -72,7 +74,7 @@ class Groups extends Component<{}, GroupsState>{
         this.setState({groups: groups});
     }
 
-    async getTableDataById(table_id: Number) {
+    async getTableDataById(table_id: number) {
         let response = await fetch("/tables/" + table_id, {
             method: 'POST',
             credentials: 'same-origin'
@@ -80,6 +82,7 @@ class Groups extends Component<{}, GroupsState>{
 
         let data = await response.json();
         renderTable(data);
+        this.setState({selectedTable: table_id});
     }
 
     render() {
@@ -98,7 +101,11 @@ class Groups extends Component<{}, GroupsState>{
                         <div className={group.is_tables_visible ? "SidebarMenu-GroupsTables" : "SidebarMenu-GroupsTables SidebarMenu-GroupsTables__hidden"}>
                             {this.state.tables.filter(table => table.group_id == group.id).map((table, index) => (
                                 <div
-                                    className="SidebarMenu-GroupsItem SidebarMenu-GroupsItem__table"
+                                    className={
+                                        table.table_id == this.state.selectedTable ?
+                                        "SidebarMenu-GroupsItem SidebarMenu-GroupsItem__table SidebarMenu-GroupsItem__selected" :
+                                        "SidebarMenu-GroupsItem SidebarMenu-GroupsItem__table"
+                                    }
                                     key={index}
                                     onClick={() => this.getTableDataById(table.table_id)}
                                 >
