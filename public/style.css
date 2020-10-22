@@ -328,7 +328,7 @@ template {
   color: white;
   background-color: #4DA4DA; }
 
-.SidebarMenu-Item {
+.SidebarMenu-Item, .SidebarMenu-GroupsItem {
   display: block;
   text-decoration: none;
   font-size: 16px;
@@ -339,18 +339,21 @@ template {
   color: white;
   background-color: #4DA4DA; }
 
-.SidebarMenu-Item__group {
+.SidebarMenu-GroupsItem__group {
   margin-top: 5px;
   color: #474747;
   background-color: #ECECEC; }
-  .SidebarMenu-Item__group:hover {
+  .SidebarMenu-GroupsItem__group:hover {
     background-color: #cccccc; }
 
-.SidebarMenu-Item__table {
+.SidebarMenu-GroupsItem__table {
   color: #474747;
   padding: 5px 30px; }
-  .SidebarMenu-Item__table:hover {
+  .SidebarMenu-GroupsItem__table:hover {
     background-color: #FFEEBF; }
 
-.SidebarMenu-Tables__hidden {
+.SidebarMenu-GroupsTables__hidden {
   display: none; }
+
+.SidebarMenu-Groups {
+  cursor: pointer; }

@@ -52,11 +52,25 @@ class Server(BaseHTTPRequestHandler):
             table_names = []
             for table in tables_list:
                 table_names.append({
+                    "table_id": table["table_id"],
                     "name": table["name"],
                     "group_id": table["group_id"]
                 })
             tables_str = json.dumps(table_names)
             self.wfile.write(bytes(tables_str, 'utf-8'))
+        elif '/tables/' in self.path:
+            self.send_response(200)
+            self.send_header("Content-type", "application/json")
+            self.end_headers()
+            table_id = int(self.path.split('/tables/')[1])
+            tables = open("fixtures/tables.json").read()
+            tables_list = json.loads(tables)
+            for table in tables_list:
+                if table["table_id"] == table_id:
+                    table_data = table["data"]
+                    break
+            data_str = json.dumps(table_data)
+            self.wfile.write(bytes(data_str, 'utf-8'))
         else:
             self.send_response(404)
             self.end_headers()

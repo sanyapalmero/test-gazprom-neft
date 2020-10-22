@@ -27,7 +27,7 @@
     background-color: $primary-color;
 }
 
-.SidebarMenu-Item {
+.SidebarMenu-Item, .SidebarMenu-GroupsItem {
     display: block;
     text-decoration: none;
     font-size: 16px;
@@ -40,7 +40,7 @@
     background-color: $primary-color;
 }
 
-.SidebarMenu-Item__group {
+.SidebarMenu-GroupsItem__group {
     margin-top: 5px;
     color: $text-color;
     background-color: $secondary-color;
@@ -50,7 +50,7 @@
     }
 }
 
-.SidebarMenu-Item__table {
+.SidebarMenu-GroupsItem__table {
     color: $text-color;
     padding: 5px 30px;
 
@@ -59,6 +59,10 @@
     }
 }
 
-.SidebarMenu-Tables__hidden {
+.SidebarMenu-GroupsTables__hidden {
     display: none;
+}
+
+.SidebarMenu-Groups {
+    cursor: pointer;
 }

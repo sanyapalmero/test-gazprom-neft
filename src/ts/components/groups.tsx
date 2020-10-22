@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import {render} from 'react-dom';
+import { render } from 'react-dom';
+
+import { renderTable } from './table';
 
 interface Group {
     id: number,
@@ -8,6 +10,7 @@ interface Group {
 }
 
 interface Table {
+    table_id: number,
     group_id: number,
     name: string
 }
@@ -37,15 +40,12 @@ class Groups extends Component<{}, GroupsState>{
             credentials: 'same-origin'
         });
 
-        let resp_json = await response.json();
-        for (let group of resp_json) {
-            Object.defineProperty(group, 'is_tables_visible', {
-                value: false,
-                writable: true
-            });
+        let groups = await response.json() as Group[];
+        for (let group of groups) {
+            group.is_tables_visible = false;
         }
 
-        this.setState({groups: resp_json});
+        this.setState({groups: groups});
     }
 
     async getTableNamesFromJsonFile() {
@@ -54,8 +54,8 @@ class Groups extends Component<{}, GroupsState>{
             credentials: 'same-origin'
         });
 
-        let resp_json = await response.json();
-        this.setState({tables: resp_json});
+        let tables = await response.json() as Table[];
+        this.setState({tables: tables});
     }
 
     toggleGroupTables(group_id: Number) {
@@ -72,23 +72,34 @@ class Groups extends Component<{}, GroupsState>{
         this.setState({groups: groups});
     }
 
+    async getTableDataById(table_id: Number) {
+        let response = await fetch("/tables/" + table_id, {
+            method: 'POST',
+            credentials: 'same-origin'
+        });
+
+        let data = await response.json();
+        renderTable(data);
+    }
+
     render() {
         return (
             <div>
                 {this.state.groups.map(group => (
                     <div key={group.id}>
                         <div
-                            className="SidebarMenu-Item SidebarMenu-Item__group"
+                            className="SidebarMenu-GroupsItem SidebarMenu-GroupsItem__group"
                             key={group.id}
                             onClick={() => this.toggleGroupTables(group.id)}
                         >
                             {group.name}
                         </div>
-                        <div className={group.is_tables_visible ? "SidebarMenu-Tables" : "SidebarMenu-Tables SidebarMenu-Tables__hidden"}>
+                        <div className={group.is_tables_visible ? "SidebarMenu-GroupsTables" : "SidebarMenu-GroupsTables SidebarMenu-GroupsTables__hidden"}>
                             {this.state.tables.filter(table => table.group_id == group.id).map((table, index) => (
                                 <div
-                                    className="SidebarMenu-Item SidebarMenu-Item__table"
+                                    className="SidebarMenu-GroupsItem SidebarMenu-GroupsItem__table"
                                     key={index}
+                                    onClick={() => this.getTableDataById(table.table_id)}
                                 >
                                     {table.name}
                                 </div>
@@ -102,5 +113,5 @@ class Groups extends Component<{}, GroupsState>{
 }
 
 export function renderGroups(htmlElement: HTMLElement) {
-    render(<Groups/>, htmlElement)
+    render(<Groups/>, htmlElement);
 }
