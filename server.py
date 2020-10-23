@@ -54,7 +54,8 @@ class Server(BaseHTTPRequestHandler):
                 table_names.append({
                     "table_id": table["table_id"],
                     "name": table["name"],
-                    "group_id": table["group_id"]
+                    "group_id": table["group_id"],
+                    "graph": table["graph"],
                 })
             tables_str = json.dumps(table_names)
             self.wfile.write(bytes(tables_str, 'utf-8'))

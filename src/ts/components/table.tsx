@@ -1,12 +1,52 @@
-import React, { Component } from 'react';
+import React, { CanvasHTMLAttributes, Component } from 'react';
 import {render} from 'react-dom';
+import Chart from 'chart.js';
 
 interface TableProps {
     table_name: string,
-    table_rows: [Object]
+    table_rows: [Object],
+    has_graph: boolean,
 }
 
-class Table extends Component<TableProps, {}> {
+class TableData extends Component<TableProps, {}> {
+    showGraph() {
+        let labels: string[] = [];
+        let data: number[] = [];
+
+        this.props.table_rows.map(row => {
+            let rowValues = Object.values(row);
+            labels.push(rowValues[1]);
+            data.push(rowValues[2]);
+        });
+
+        let row = this.props.table_rows[0];
+        let headers = Object.keys(row);
+        let label = headers[2];
+
+        let context = document.getElementById('chart') as HTMLCanvasElement;
+        new Chart(context, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: label,
+                    data: data,
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                }]
+            },
+            options: {
+                responsive: false,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        })
+    }
+
     render() {
         let row = this.props.table_rows[0];
         let headers = Object.keys(row);
@@ -46,13 +86,19 @@ class Table extends Component<TableProps, {}> {
                             {values}
                         </tbody>
                     </table>
+                    {this.props.has_graph ?
+                        <button className="Button Button-Success" onClick={() => this.showGraph()}>Построить график</button>
+                    : null}
+                    {this.props.has_graph ?
+                        <canvas className="Chart" id="chart"></canvas>
+                    : null}
                 </div>
             </div>
         )
     }
 }
 
-export function renderTable(data: [Object], table_name: string) {
+export function renderTable(data: [Object], table_name: string, graph: boolean) {
     let htmlElement = document.getElementById('table') as HTMLElement;
-    render(<Table table_rows={data} table_name={table_name}/>, htmlElement);
+    render(<TableData table_rows={data} table_name={table_name} has_graph={graph}/>, htmlElement);
 }

@@ -12,7 +12,8 @@ interface Group {
 interface Table {
     table_id: number,
     group_id: number,
-    name: string
+    name: string,
+    graph: boolean,
 }
 
 interface GroupsState {
@@ -74,15 +75,15 @@ class Groups extends Component<{}, GroupsState>{
         this.setState({groups: groups});
     }
 
-    async getTableDataById(table_id: number, table_name: string) {
-        let response = await fetch("/tables/" + table_id, {
+    async getTableData(table: Table) {
+        let response = await fetch("/tables/" + table.table_id, {
             method: 'POST',
             credentials: 'same-origin'
         });
 
         let data = await response.json();
-        renderTable(data, table_name);
-        this.setState({selectedTable: table_id});
+        renderTable(data, table.name, table.graph);
+        this.setState({selectedTable: table.table_id});
     }
 
     render() {
@@ -107,7 +108,7 @@ class Groups extends Component<{}, GroupsState>{
                                         "SidebarMenu-GroupsItem SidebarMenu-GroupsItem__table"
                                     }
                                     key={index}
-                                    onClick={() => this.getTableDataById(table.table_id, table.name)}
+                                    onClick={() => this.getTableData(table)}
                                 >
                                     <div className="SidebarMenu-FileIcon"></div>
                                     <div className="SidebarMenu-GroupsItem__name">{table.name}</div>

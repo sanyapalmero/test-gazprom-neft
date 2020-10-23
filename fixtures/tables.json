@@ -3,6 +3,7 @@
         "table_id": 1,
         "name": "История",
         "group_id": 1,
+        "graph": false,
         "data": [
             {
                 "row_id": 1,
@@ -100,6 +101,7 @@
         "table_id": 2,
         "name": "Коэффициент эксплуатации",
         "group_id": 1,
+        "graph": true,
         "data": [
             {
                 "row_id": 1,
@@ -122,6 +124,7 @@
         "table_id": 3,
         "name": "Наработка газоотводов",
         "group_id": 2,
+        "graph": true,
         "data": [
             {
                 "row_id": 1,

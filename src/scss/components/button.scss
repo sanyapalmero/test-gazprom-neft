@@ -1,0 +1,15 @@
+.Button {
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+}
+
+.Button-Success {
+    color: white;
+    font-weight: bold;
+    background-color: $success-color;
+
+    &:hover {
+        background-color: $success-color-hover;
+    }
+}
