@@ -99,11 +99,11 @@ export function renderTable(data: [Object], table_name: string, graph: boolean) 
     let htmlElement = document.getElementById('table') as HTMLElement;
     render(<TableData table_rows={data} table_name={table_name} has_graph={graph}/>, htmlElement);
 
+    let canvas = document.getElementById('chart');
+    if (canvas) {
+        canvas.remove();
+    }
     if (graph) {
-        let canvas = document.getElementById('chart');
-        if (canvas) {
-            canvas.remove();
-        }
         let showGraphBtn = document.getElementById('showGraph');
         if (showGraphBtn) {
             showGraphBtn.insertAdjacentHTML('afterend', '<canvas class="Chart" id="chart"></canvas>');
