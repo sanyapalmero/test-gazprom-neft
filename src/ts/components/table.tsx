@@ -44,7 +44,7 @@ class TableData extends Component<TableProps, {}> {
                     }]
                 }
             }
-        })
+        });
     }
 
     render() {
@@ -87,10 +87,7 @@ class TableData extends Component<TableProps, {}> {
                         </tbody>
                     </table>
                     {this.props.has_graph ?
-                        <button className="Button Button-Success" onClick={() => this.showGraph()}>Построить график</button>
-                    : null}
-                    {this.props.has_graph ?
-                        <canvas className="Chart" id="chart"></canvas>
+                        <button className="Button Button-Success" id="showGraph" onClick={() => this.showGraph()}>Построить график</button>
                     : null}
                 </div>
             </div>
@@ -101,4 +98,15 @@ class TableData extends Component<TableProps, {}> {
 export function renderTable(data: [Object], table_name: string, graph: boolean) {
     let htmlElement = document.getElementById('table') as HTMLElement;
     render(<TableData table_rows={data} table_name={table_name} has_graph={graph}/>, htmlElement);
+
+    if (graph) {
+        let canvas = document.getElementById('chart');
+        if (canvas) {
+            canvas.remove();
+        }
+        let showGraphBtn = document.getElementById('showGraph');
+        if (showGraphBtn) {
+            showGraphBtn.insertAdjacentHTML('afterend', '<canvas class="Chart" id="chart"></canvas>');
+        }
+    }
 }
