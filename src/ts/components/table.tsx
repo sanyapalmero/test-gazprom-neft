@@ -8,21 +8,26 @@ interface TableProps {
     has_graph: boolean,
 }
 
+// Компонент для вывода таблицы и отображения графика, если он есть.
 class TableData extends Component<TableProps, {}> {
     showGraph() {
+        // Метод отображения графика по нажатию на кнопку.
         let labels: string[] = [];
         let data: number[] = [];
 
+        // Получение названий колонок и данных.
         this.props.table_rows.map(row => {
             let rowValues = Object.values(row);
             labels.push(rowValues[1]);
             data.push(rowValues[2]);
         });
 
+        // Получение названия отображаемых данных.
         let row = this.props.table_rows[0];
         let headers = Object.keys(row);
         let label = headers[2];
 
+        // Создание графика
         let context = document.getElementById('chart') as HTMLCanvasElement;
         new Chart(context, {
             type: 'bar',
@@ -48,16 +53,19 @@ class TableData extends Component<TableProps, {}> {
     }
 
     render() {
+        // Генерация таблицы из объектов json.
         let row = this.props.table_rows[0];
         let headers = Object.keys(row);
         let headersTdList: JSX.Element[] = [];
 
+        // Создание названий колонок.
         headers.map((header, index) => {
             headersTdList.push(
                 <td key={index}>{header}</td>
             )
         });
 
+        // Создание данных.
         let values: JSX.Element[] = [];
         this.props.table_rows.map((row, index) => {
             let tdList: JSX.Element[] = [];
@@ -95,10 +103,13 @@ class TableData extends Component<TableProps, {}> {
     }
 }
 
+// Функция рендеринга компонента TableData. Импортируется в groups.tsx
 export function renderTable(data: [Object], table_name: string, graph: boolean) {
+    // Рендернг компонента.
     let htmlElement = document.getElementById('table') as HTMLElement;
     render(<TableData table_rows={data} table_name={table_name} has_graph={graph}/>, htmlElement);
 
+    // Очищение элемента canvas.
     let canvas = document.getElementById('chart');
     if (canvas) {
         canvas.remove();

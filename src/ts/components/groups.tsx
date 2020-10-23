@@ -22,6 +22,7 @@ interface GroupsState {
     selectedTable: number | null,
 }
 
+// Компонент для вывода групп и таблиц под группами.
 class Groups extends Component<{}, GroupsState>{
     constructor(props = {}) {
         super(props);
@@ -38,6 +39,7 @@ class Groups extends Component<{}, GroupsState>{
     }
 
     async getGroupsFromJsonFile() {
+        // Получение и сохранение групп в состояние.
         let response = await fetch("/groups", {
             method: 'POST',
             credentials: 'same-origin'
@@ -45,6 +47,7 @@ class Groups extends Component<{}, GroupsState>{
 
         let groups = await response.json() as Group[];
         for (let group of groups) {
+            // Изначально все таблицы группы скрыты.
             group.is_tables_visible = false;
         }
 
@@ -52,6 +55,7 @@ class Groups extends Component<{}, GroupsState>{
     }
 
     async getTableNamesFromJsonFile() {
+        // Получение списка таблиц.
         let response = await fetch("/tables", {
             method: 'POST',
             credentials: 'same-origin'
@@ -62,6 +66,7 @@ class Groups extends Component<{}, GroupsState>{
     }
 
     toggleGroupTables(group_id: number) {
+        // Метод скрытия/показа таблиц по нажатию на группу.
         let groups = [...this.state.groups];
         for (let group of groups) {
             if (group.id == group_id) {
@@ -76,6 +81,7 @@ class Groups extends Component<{}, GroupsState>{
     }
 
     async getTableData(table: Table) {
+        // Метод получения таблицы по её id.
         let response = await fetch("/tables/" + table.table_id, {
             method: 'POST',
             credentials: 'same-origin'
@@ -122,6 +128,7 @@ class Groups extends Component<{}, GroupsState>{
     }
 }
 
+// Функция рендеринга компонента Groups. Импортируется в index.ts
 export function renderGroups(htmlElement: HTMLElement) {
     render(<Groups/>, htmlElement);
 }
