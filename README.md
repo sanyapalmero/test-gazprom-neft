@@ -9,7 +9,7 @@ git clone git@github.com:sanyapalmero/test-gazprom-neft.git
 
 Установка пакетов
 ```
-npm ci
+npm install
 ```
 
 Сборка статики
